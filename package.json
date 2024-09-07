@@ -1,0 +1,65 @@
+{
+  "name": "codestitch-helper",
+  "displayName": "CodeStitch Helper",
+  "description": "",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:scss",
+    "onLanguage:css"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "views": {
+        "explorer": [
+            {
+                "id": "codestitchHelper",
+                "name": "SCSS Navigator"
+            }
+        ]
+    },
+    "commands": [
+      {
+          "command": "codestitchHelper.openSection",
+          "title": "Open SCSS Section"
+      },
+      {
+          "command": "codestitchHelper.selectAll",
+          "title": "Select All Section Text"
+      }
+    ],
+    "menus": {
+        "view/item/context": [
+            {
+                "command": "codestitchHelper.selectAll",
+                "when": "viewItem == selectableSection",
+                "group": "inline"
+            }
+        ]
+    }
+},
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.50.0",
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "eslint": "^9.9.1",
+    "typescript": "^5.5.4",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1"
+  }
+}
