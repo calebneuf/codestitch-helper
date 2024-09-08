@@ -2,7 +2,8 @@
   "name": "codestitch-helper",
   "displayName": "CodeStitch Helper",
   "description": "",
-  "version": "0.0.1",
+  "version": "0.0.5",
+  "publisher": "NeuDigital",
   "engines": {
     "vscode": "^1.50.0"
   },
@@ -11,7 +12,8 @@
   ],
   "activationEvents": [
     "onLanguage:scss",
-    "onLanguage:css"
+    "onLanguage:css",
+    "onLanguage:less"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -19,14 +21,16 @@
         "explorer": [
             {
                 "id": "codestitchHelper",
-                "name": "SCSS Navigator"
+                "name": "CodeStitch Styles Navigator",
+                "visibility": "visible",
+                "contextualTitle": "CodeStitch Styles Navigator"
             }
         ]
     },
     "commands": [
       {
           "command": "codestitchHelper.openSection",
-          "title": "Open SCSS Section"
+          "title": "Open CodeStitch Styles Navigator"
       },
       {
           "command": "codestitchHelper.selectAll",

@@ -62,23 +62,25 @@ function activate(context) {
         end = new vscode.Position(nextSectionLine, document.lineAt(nextSectionLine).range.end.character);
         // Show the document and select the section range
         vscode.window.showTextDocument(document, { selection: new vscode.Range(start, end) });
-        // Copy the selected section text to the clipboard
-        vscode.env.clipboard.writeText(document.getText(new vscode.Range(start, end)));
     });
+    // Automatically open the Explorer and focus on the SCSS Navigator
+    vscode.commands.executeCommand('workbench.view.explorer'); // Ensures Explorer is open
+    vscode.commands.executeCommand('workbench.view.explorer.codestitchHelper.focus'); // Focuses on the SCSS Navigator
+    var supportedLanguages = ['scss', 'css', 'sass', 'less'];
     // Add document change listeners to auto-refresh the tree when the SCSS file is modified or opened
     vscode.workspace.onDidChangeTextDocument((event) => {
-        if (event.document.languageId === 'scss') {
+        if (supportedLanguages.includes(event.document.languageId)) {
             scssNavProvider.refresh();
         }
     });
     // Listen for editor change and refresh the tree view when switching between files
     vscode.window.onDidChangeActiveTextEditor((editor) => {
-        if (editor && editor.document.languageId === 'scss') {
+        if (editor && supportedLanguages.includes(editor.document.languageId)) {
             scssNavProvider.refresh();
         }
     });
     vscode.workspace.onDidOpenTextDocument((document) => {
-        if (document.languageId === 'scss') {
+        if (supportedLanguages.includes(document.languageId)) {
             scssNavProvider.refresh();
         }
     });
