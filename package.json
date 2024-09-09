@@ -13,7 +13,9 @@
   "activationEvents": [
     "onLanguage:scss",
     "onLanguage:css",
-    "onLanguage:less"
+    "onLanguage:less",
+    "onLanguage:njk"
+  
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -35,6 +37,10 @@
       {
           "command": "codestitchHelper.selectAll",
           "title": "Select All Section Text"
+      },
+      {
+          "command": "codestitchHelper.replaceNavTabs",
+          "title": "Replace Nav Tabs with 11ty-compatible markup"
       }
     ],
     "menus": {
@@ -44,7 +50,14 @@
                 "when": "viewItem == selectableSection",
                 "group": "inline"
             }
+        ],
+        "editor/context": [
+            {
+                "command": "codestitchHelper.replaceNavTabs",
+                "when": "editorLangId == html"
+            }
         ]
+
     }
 },
   "scripts": {
