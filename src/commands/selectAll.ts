@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
-import { SCSSSection } from '../providers/scssNavigationProvider';
+import { CodeSection } from '../providers/sectionNavigationProvider';
 
-export function selectAll(section: SCSSSection) {
+export function selectAll(section: CodeSection) {
     const document = section.document;
     
     const start = new vscode.Position(section.line - 1, 0);

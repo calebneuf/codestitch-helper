@@ -2,7 +2,7 @@
   "name": "codestitch-helper",
   "displayName": "CodeStitch Helper",
   "description": "",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "publisher": "NeuDigital",
   "engines": {
     "vscode": "^1.50.0"
@@ -11,11 +11,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:scss",
-    "onLanguage:css",
-    "onLanguage:less",
-    "onLanguage:njk"
-  
+    "*"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -25,14 +21,14 @@
                 "id": "codestitchHelper",
                 "name": "CodeStitch Styles Navigator",
                 "visibility": "visible",
-                "contextualTitle": "CodeStitch Styles Navigator"
+                "contextualTitle": "CodeStitch Sections Navigator"
             }
         ]
     },
     "commands": [
       {
           "command": "codestitchHelper.openSection",
-          "title": "Open CodeStitch Styles Navigator"
+          "title": "Open CodeStitch Sections Navigator"
       },
       {
           "command": "codestitchHelper.selectAll",
@@ -40,7 +36,7 @@
       },
       {
           "command": "codestitchHelper.replaceNavTabs",
-          "title": "Replace Nav Tabs with 11ty-compatible markup"
+          "title": "Replace Static Tabs with 11ty Dynamics Tabs"
       }
     ],
     "menus": {

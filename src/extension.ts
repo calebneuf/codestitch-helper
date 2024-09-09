@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { SCSSNavigationProvider, SCSSSection } from './providers/scssNavigationProvider';
+import { SectionNavigationProvider, CodeSection } from './providers/sectionNavigationProvider';
 import { replaceNavTabs } from './commands/replaceNavTabs';
 import { selectAll } from './commands/selectAll';
 import { openSection } from './commands/openSection';
@@ -8,14 +8,14 @@ import { CodeLensProvider } from './providers/codeLensProvider';
 export function activate(context: vscode.ExtensionContext) {
     console.log('codestitch-helper is now active!');
     
-    const scssNavProvider = new SCSSNavigationProvider();
-    vscode.window.registerTreeDataProvider('codestitchHelper', scssNavProvider);
+    const sectionNavProvider = new SectionNavigationProvider();
+    vscode.window.registerTreeDataProvider('codestitchHelper', sectionNavProvider);
 
-    const openSectionDisposable = vscode.commands.registerCommand('codestitchHelper.openSection', (section: SCSSSection) => {
+    const openSectionDisposable = vscode.commands.registerCommand('codestitchHelper.openSection', (section: CodeSection) => {
         openSection(section);
     });
 
-    const selectAllDisposable = vscode.commands.registerCommand('codestitchHelper.selectAll', (section: SCSSSection) => {
+    const selectAllDisposable = vscode.commands.registerCommand('codestitchHelper.selectAll', (section: CodeSection) => {
         selectAll(section);
     });
 
@@ -29,22 +29,22 @@ export function activate(context: vscode.ExtensionContext) {
     // Register CodeLensProvider for both HTML and SCSS
     context.subscriptions.push(vscode.languages.registerCodeLensProvider({ language: '*' }, new CodeLensProvider()));
 
-    const supportedLanguages = ['scss', 'css', 'sass', 'less'];
+    const supportedLanguages = ['scss', 'css', 'sass', 'less', 'njk', 'nunjucks', 'html'];
     vscode.workspace.onDidChangeTextDocument((event) => {
         if (supportedLanguages.includes(event.document.languageId)) {
-            scssNavProvider.refresh();
+            sectionNavProvider.refresh();
         }
     });
 
     vscode.window.onDidChangeActiveTextEditor((editor) => {
         if (editor && supportedLanguages.includes(editor.document.languageId)) {
-            scssNavProvider.refresh();
+            sectionNavProvider.refresh();
         }
     });
 
     vscode.workspace.onDidOpenTextDocument((document) => {
         if (supportedLanguages.includes(document.languageId)) {
-            scssNavProvider.refresh();
+            sectionNavProvider.refresh();
         }
     });
 
