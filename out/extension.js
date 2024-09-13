@@ -31,6 +31,7 @@ const replaceNavTabs_1 = require("./commands/replaceNavTabs");
 const selectAll_1 = require("./commands/selectAll");
 const openSection_1 = require("./commands/openSection");
 const codeLensProvider_1 = require("./providers/codeLensProvider");
+const addIconClass_1 = require("./commands/addIconClass");
 function activate(context) {
     console.log('codestitch-helper is now active!');
     const sectionNavProvider = new sectionNavigationProvider_1.SectionNavigationProvider();
@@ -43,6 +44,9 @@ function activate(context) {
     });
     const replaceNavTabsDisposable = vscode.commands.registerCommand('codestitchHelper.replaceNavTabs', (document) => {
         (0, replaceNavTabs_1.replaceNavTabs)(document);
+    });
+    const addIconClassDisposable = vscode.commands.registerCommand('codestitchHelper.addIconClass', (document, range) => {
+        (0, addIconClass_1.addIconClass)(document, range);
     });
     // Ensure the Explorer view is open
     vscode.commands.executeCommand('workbench.view.explorer'); // No need to focus on a specific view
@@ -64,7 +68,7 @@ function activate(context) {
             sectionNavProvider.refresh();
         }
     });
-    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable);
+    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

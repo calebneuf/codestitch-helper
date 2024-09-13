@@ -4,6 +4,7 @@ import { replaceNavTabs } from './commands/replaceNavTabs';
 import { selectAll } from './commands/selectAll';
 import { openSection } from './commands/openSection';
 import { CodeLensProvider } from './providers/codeLensProvider';
+import { addIconClass } from './commands/addIconClass';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('codestitch-helper is now active!');
@@ -21,6 +22,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     const replaceNavTabsDisposable = vscode.commands.registerCommand('codestitchHelper.replaceNavTabs', (document: vscode.TextDocument) => {
         replaceNavTabs(document);
+    });
+
+    const addIconClassDisposable = vscode.commands.registerCommand('codestitchHelper.addIconClass', (document: vscode.TextDocument, range: vscode.Range) => {
+        addIconClass(document, range);
     });
 
     // Ensure the Explorer view is open
@@ -48,7 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable);
+    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable);
 }
 
 export function deactivate() {}

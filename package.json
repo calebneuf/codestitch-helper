@@ -2,7 +2,7 @@
   "name": "codestitch-helper",
   "displayName": "CodeStitch Helper",
   "description": "",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "publisher": "NeuDigital",
   "engines": {
     "vscode": "^1.50.0"
@@ -37,6 +37,10 @@
       {
           "command": "codestitchHelper.replaceNavTabs",
           "title": "Replace Static Tabs with 11ty Dynamics Tabs"
+      },
+      {
+          "command": "codestitchHelper.addIconClass",
+          "title": "Add cs-icon class to svg"
       }
     ],
     "menus": {
