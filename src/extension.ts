@@ -5,6 +5,7 @@ import { selectAll } from './commands/selectAll';
 import { openSection } from './commands/openSection';
 import { CodeLensProvider } from './providers/codeLensProvider';
 import { addIconClass } from './commands/addIconClass';
+import { convertToNetlifyForm } from './commands/convertToNetlifyForm';
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('codestitch-helper is now active!');
@@ -26,6 +27,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     const addIconClassDisposable = vscode.commands.registerCommand('codestitchHelper.addIconClass', (document: vscode.TextDocument, range: vscode.Range) => {
         addIconClass(document, range);
+    });
+
+    const convertToNetlifyFormDisposable = vscode.commands.registerCommand('codestitchHelper.convertToNetlifyForm', (document: vscode.TextDocument) => {
+        convertToNetlifyForm(document);
     });
 
     // Ensure the Explorer view is open
@@ -53,7 +58,7 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable);
+    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable);
 }
 
 export function deactivate() {}

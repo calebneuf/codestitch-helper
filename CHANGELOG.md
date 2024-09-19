@@ -1,5 +1,8 @@
 # Change Log
 
+## 0.0.9
+- Added button to convert form into netlify compatible form
+
 ## 0.0.8
 - Added "Add cs-icon class" CodeLens to SVGs which do not have it
 

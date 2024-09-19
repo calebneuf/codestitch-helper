@@ -32,6 +32,7 @@ const selectAll_1 = require("./commands/selectAll");
 const openSection_1 = require("./commands/openSection");
 const codeLensProvider_1 = require("./providers/codeLensProvider");
 const addIconClass_1 = require("./commands/addIconClass");
+const convertToNetlifyForm_1 = require("./commands/convertToNetlifyForm");
 function activate(context) {
     console.log('codestitch-helper is now active!');
     const sectionNavProvider = new sectionNavigationProvider_1.SectionNavigationProvider();
@@ -47,6 +48,9 @@ function activate(context) {
     });
     const addIconClassDisposable = vscode.commands.registerCommand('codestitchHelper.addIconClass', (document, range) => {
         (0, addIconClass_1.addIconClass)(document, range);
+    });
+    const convertToNetlifyFormDisposable = vscode.commands.registerCommand('codestitchHelper.convertToNetlifyForm', (document) => {
+        (0, convertToNetlifyForm_1.convertToNetlifyForm)(document);
     });
     // Ensure the Explorer view is open
     vscode.commands.executeCommand('workbench.view.explorer'); // No need to focus on a specific view
@@ -68,7 +72,7 @@ function activate(context) {
             sectionNavProvider.refresh();
         }
     });
-    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable);
+    context.subscriptions.push(openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

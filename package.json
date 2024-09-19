@@ -2,7 +2,7 @@
   "name": "codestitch-helper",
   "displayName": "CodeStitch Helper",
   "description": "",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "publisher": "NeuDigital",
   "engines": {
     "vscode": "^1.50.0"
@@ -41,6 +41,10 @@
       {
           "command": "codestitchHelper.addIconClass",
           "title": "Add cs-icon class to svg"
+      },
+      {
+          "command": "codestitchHelper.convertToNetlifyForm",
+          "title": "Convert Form to Netlify Form with reCAPTCHA"
       }
     ],
     "menus": {

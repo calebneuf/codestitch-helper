@@ -44,6 +44,18 @@ class CodeLensProvider {
                 arguments: [document]
             }));
         }
+        const formPattern = /<form[\s\S]*?>/g;
+        while ((match = formPattern.exec(text)) !== null) {
+            const startPosition = document.positionAt(match.index);
+            const endPosition = document.positionAt(match.index + match[0].length); // Find the full <form> tag
+            const range = new vscode.Range(startPosition, endPosition);
+            // Create a new CodeLens above the form tag
+            codeLenses.push(new vscode.CodeLens(range, {
+                title: "Convert to Netlify Form",
+                command: "codestitchHelper.convertToNetlifyForm",
+                arguments: [document]
+            }));
+        }
         // Regex to find <svg> tags without the class "cs-icon"
         const svgPattern = /<svg([^>]*?)>/g;
         while ((match = svgPattern.exec(text)) !== null) {
