@@ -3,6 +3,10 @@
   "displayName": "CodeStitch Helper",
   "description": "",
   "version": "0.0.9",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calebneuf/codestitch-helper.git"
+  },
   "publisher": "NeuDigital",
   "engines": {
     "vscode": "^1.50.0"
