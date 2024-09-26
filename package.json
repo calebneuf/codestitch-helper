@@ -2,7 +2,7 @@
   "name": "codestitch-helper",
   "displayName": "CodeStitch Helper",
   "description": "",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "repository": {
     "type": "git",
     "url": "https://github.com/calebneuf/codestitch-helper.git"
@@ -20,54 +20,53 @@
   "main": "./out/extension.js",
   "contributes": {
     "views": {
-        "explorer": [
-            {
-                "id": "codestitchHelper",
-                "name": "CodeStitch Styles Navigator",
-                "visibility": "visible",
-                "contextualTitle": "CodeStitch Sections Navigator"
-            }
-        ]
+      "explorer": [
+        {
+          "id": "codestitchHelper",
+          "name": "CodeStitch Styles Navigator",
+          "visibility": "visible",
+          "contextualTitle": "CodeStitch Sections Navigator"
+        }
+      ]
     },
     "commands": [
       {
-          "command": "codestitchHelper.openSection",
-          "title": "Open CodeStitch Sections Navigator"
+        "command": "codestitchHelper.openSection",
+        "title": "Open CodeStitch Sections Navigator"
       },
       {
-          "command": "codestitchHelper.selectAll",
-          "title": "Select All Section Text"
+        "command": "codestitchHelper.selectAll",
+        "title": "Select All Section Text"
       },
       {
-          "command": "codestitchHelper.replaceNavTabs",
-          "title": "Replace Static Tabs with 11ty Dynamics Tabs"
+        "command": "codestitchHelper.replaceNavTabs",
+        "title": "Replace Static Tabs with 11ty Dynamics Tabs"
       },
       {
-          "command": "codestitchHelper.addIconClass",
-          "title": "Add cs-icon class to svg"
+        "command": "codestitchHelper.addIconClass",
+        "title": "Add cs-icon class to svg"
       },
       {
-          "command": "codestitchHelper.convertToNetlifyForm",
-          "title": "Convert Form to Netlify Form with reCAPTCHA"
+        "command": "codestitchHelper.convertToNetlifyForm",
+        "title": "Convert Form to Netlify Form with reCAPTCHA"
       }
     ],
     "menus": {
-        "view/item/context": [
-            {
-                "command": "codestitchHelper.selectAll",
-                "when": "viewItem == selectableSection",
-                "group": "inline"
-            }
-        ],
-        "editor/context": [
-            {
-                "command": "codestitchHelper.replaceNavTabs",
-                "when": "editorLangId == html"
-            }
-        ]
-
+      "view/item/context": [
+        {
+          "command": "codestitchHelper.selectAll",
+          "when": "viewItem == selectableSection",
+          "group": "inline"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "codestitchHelper.replaceNavTabs",
+          "when": "editorLangId == html"
+        }
+      ]
     }
-},
+  },
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
