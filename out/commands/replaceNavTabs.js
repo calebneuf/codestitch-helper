@@ -68,15 +68,15 @@ function replaceNavTabs(document) {
                                 {% endfor %}
 
                                 {# Render the <button> with the active class, dropdown icon and child links #}
-                                <button 
-                                    class="cs-li-link cs-dropdown-button {{ activeClass }}"
+                                <span 
+                                    class="cs-li-link {{ activeClass }}"
                                     aria-expanded="false"
                                     aria-controls="dropdown-{{ entry.key }}"
                                     aria-label="dropdown-{{ entry.key }}"
                                 >
                                     {{ entry.key }}
                                     <img class="cs-drop-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons%2Fdown.svg" alt="dropdown icon" width="15" height="15" decoding="async" aria-hidden="true">
-                                </button>
+                                </span>
 
                                 <ul class="cs-drop-ul" id="dropdown-{{ entry.key }}">
                                     {% for child in entry.children %}
