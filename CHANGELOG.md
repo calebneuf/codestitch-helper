@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.1.0
+- Added optimize images for sharp integration
+- Added button to quickly add code needed for sharp integration
+
 ## 0.0.10
 
 * Adjusted the 11ty navigation replacement code to not use a `button `element, and a span, to not require additional styling.

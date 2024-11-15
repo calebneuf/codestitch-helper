@@ -30,9 +30,9 @@ class CodeLensProvider {
     provideCodeLenses(document, token) {
         const codeLenses = [];
         const text = document.getText();
+        let match;
         // Regex to find the <div class="cs-ul-wrapper"> line
         const divPattern = /<div class="cs-ul-wrapper">[\s\S]*?<\/div>/g;
-        let match;
         while ((match = divPattern.exec(text)) !== null) {
             const startPosition = document.positionAt(match.index);
             const endPosition = document.positionAt(match.index + match[0].length); // Find the full <div> tag
@@ -41,7 +41,7 @@ class CodeLensProvider {
             codeLenses.push(new vscode.CodeLens(range, {
                 title: "Make compatible with 11ty",
                 command: "codestitchHelper.replaceNavTabs",
-                arguments: [document]
+                arguments: [document],
             }));
         }
         const formPattern = /<form[\s\S]*?>/g;
@@ -53,7 +53,7 @@ class CodeLensProvider {
             codeLenses.push(new vscode.CodeLens(range, {
                 title: "Convert to Netlify Form",
                 command: "codestitchHelper.convertToNetlifyForm",
-                arguments: [document]
+                arguments: [document],
             }));
         }
         // Regex to find <svg> tags without the class "cs-icon"
@@ -67,9 +67,22 @@ class CodeLensProvider {
                 codeLenses.push(new vscode.CodeLens(range, {
                     title: "Add cs-icon class",
                     command: "codestitchHelper.addIconClass",
-                    arguments: [document, range]
+                    arguments: [document, range],
                 }));
             }
+        }
+        // Regex to find any <picture> tags regardless of attributes
+        const picturePattern = /<picture\b[^>]*>[\s\S]*?<\/picture>/g;
+        while ((match = picturePattern.exec(text)) !== null) {
+            const startPosition = document.positionAt(match.index);
+            const endPosition = document.positionAt(match.index + match[0].length);
+            const range = new vscode.Range(startPosition, endPosition);
+            // Add lens for the entire picture block
+            codeLenses.push(new vscode.CodeLens(range, {
+                title: "Optimize sharp images",
+                command: "codestitchHelper.optimizeSharpImages",
+                arguments: [document, range],
+            }));
         }
         return codeLenses;
     }

@@ -42,6 +42,10 @@ Alternatively, you can install directly from the [VS Code Marketplace](https://m
 - `codestitchHelper.selectAll`: Selects all content between defined sections in the document.
 - `codestitchHelper.openSection`: Opens a specific section in the editor.
 
+## Planned Featured
+- [ ] Add project helper window to catch common mistakes with project
+- [ ] Add a button to quickly jump to css file / line of a stitch
+
 ## License
 
 MIT License
