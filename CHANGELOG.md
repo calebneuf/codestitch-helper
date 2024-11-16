@@ -1,6 +1,7 @@
 # Change Log
 
-## 0.1.0
+## 1.0.0
+
 - Added optimize images for sharp integration
 - Added button to quickly add code needed for sharp integration
 - Added button to navigate to the styling of a component
