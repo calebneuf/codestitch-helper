@@ -10,6 +10,7 @@ import { CodeLensProvider } from "./providers/codeLensProvider";
 import { addIconClass } from "./commands/addIconClass";
 import { convertToNetlifyForm } from "./commands/convertToNetlifyForm";
 import { optimizeSharpImages } from "./commands/optimizeSharpImages";
+import { navigateToSectionCSS, navigateToSectionCSSCommandId } from "./commands/navigateToSectionCSS";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
@@ -62,6 +63,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const navigateToSectionCSSDisposable = vscode.commands.registerCommand(
+    navigateToSectionCSSCommandId,
+    navigateToSectionCSS
+  );
+
   // Ensure the Explorer view is open
   vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
 
@@ -106,7 +112,8 @@ export function activate(context: vscode.ExtensionContext) {
     selectAllDisposable,
     replaceNavTabsDisposable,
     addIconClassDisposable,
-    convertToNetlifyFormDisposable
+    convertToNetlifyFormDisposable,
+    navigateToSectionCSSDisposable
   );
 }
 

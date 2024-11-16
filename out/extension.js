@@ -34,6 +34,7 @@ const codeLensProvider_1 = require("./providers/codeLensProvider");
 const addIconClass_1 = require("./commands/addIconClass");
 const convertToNetlifyForm_1 = require("./commands/convertToNetlifyForm");
 const optimizeSharpImages_1 = require("./commands/optimizeSharpImages");
+const navigateToSectionCSS_1 = require("./commands/navigateToSectionCSS");
 function activate(context) {
     console.log("codestitch-helper is now active!");
     const sectionNavProvider = new sectionNavigationProvider_1.SectionNavigationProvider();
@@ -56,6 +57,7 @@ function activate(context) {
     const optimizeSharpImagesDisposable = vscode.commands.registerCommand("codestitchHelper.optimizeSharpImages", (document, range) => {
         (0, optimizeSharpImages_1.optimizeSharpImages)(document, range);
     });
+    const navigateToSectionCSSDisposable = vscode.commands.registerCommand(navigateToSectionCSS_1.navigateToSectionCSSCommandId, navigateToSectionCSS_1.navigateToSectionCSS);
     // Ensure the Explorer view is open
     vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
     // Register CodeLensProvider for both HTML and SCSS
@@ -84,7 +86,7 @@ function activate(context) {
             sectionNavProvider.refresh();
         }
     });
-    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable);
+    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable, navigateToSectionCSSDisposable);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

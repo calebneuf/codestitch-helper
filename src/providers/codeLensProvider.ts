@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import { navigateToSectionCSSCommandId } from '../commands/navigateToSectionCSS';
 
 export class CodeLensProvider implements vscode.CodeLensProvider {
   onDidChangeCodeLenses?: vscode.Event<void> | undefined;
@@ -75,6 +76,23 @@ export class CodeLensProvider implements vscode.CodeLensProvider {
         new vscode.CodeLens(range, {
           title: "Optimize sharp images",
           command: "codestitchHelper.optimizeSharpImages",
+          arguments: [document, range],
+        })
+      );
+    }
+
+    // Regex to find <section> tags with an id attribute
+    const sectionPattern = /<section[^>]*id="([^"]+)"[^>]*>/g;
+    while ((match = sectionPattern.exec(text)) !== null) {
+      const startPosition = document.positionAt(match.index);
+      const endPosition = document.positionAt(match.index + match[0].length);
+      const range = new vscode.Range(startPosition, endPosition);
+
+      // Create a new CodeLens above the section tag
+      codeLenses.push(
+        new vscode.CodeLens(range, {
+          title: "Go to Styling",
+          command: navigateToSectionCSSCommandId,
           arguments: [document, range],
         })
       );
