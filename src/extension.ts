@@ -11,6 +11,7 @@ import { addIconClass } from "./commands/addIconClass";
 import { convertToNetlifyForm } from "./commands/convertToNetlifyForm";
 import { optimizeSharpImages } from "./commands/optimizeSharpImages";
 import { navigateToSectionCSS, navigateToSectionCSSCommandId } from "./commands/navigateToSectionCSS";
+import { setupEleventySharpImages } from './commands/setupEleventySharpImages';
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
@@ -68,6 +69,13 @@ export function activate(context: vscode.ExtensionContext) {
     navigateToSectionCSS
   );
 
+  const setupEleventySharpImagesDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.setupEleventySharpImages",
+    () => {
+        setupEleventySharpImages();
+    }
+  );
+
   // Ensure the Explorer view is open
   vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
 
@@ -113,7 +121,8 @@ export function activate(context: vscode.ExtensionContext) {
     replaceNavTabsDisposable,
     addIconClassDisposable,
     convertToNetlifyFormDisposable,
-    navigateToSectionCSSDisposable
+    navigateToSectionCSSDisposable,
+    setupEleventySharpImagesDisposable
   );
 }
 

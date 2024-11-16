@@ -31,6 +31,10 @@
     },
     "commands": [
       {
+        "command": "codestitchHelper.setupEleventySharpImages",
+        "title": "Set up 11ty Sharp Images"
+      },
+      {
         "command": "codestitchHelper.openSection",
         "title": "Open CodeStitch Sections Navigator"
       },
