@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.2.0
+
+* Added button to optimize stylesheet link
+* Added button to HTML component to navigate to CodeStitch website
+* Added command to reorder styles to correlate with HTML / remove unused style sections from file
+
 ## 1.1.0
 
 * Display stitch ID in navigator
