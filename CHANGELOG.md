@@ -1,5 +1,10 @@
 # Change Log
 
+## 1.1.0
+
+* Display stitch ID in navigator
+* Fixed a bug where "Go to Styling" button would sometimes navigate to incorrect directory, not /src
+
 ## 1.0.0
 
 - Added optimize images for sharp integration

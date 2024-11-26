@@ -46,7 +46,14 @@ export class SectionNavigationProvider implements vscode.TreeDataProvider<CodeSe
             const line = document.positionAt(match.index).line;
     
             // Capture the section label from either match[1] (arrow-style) or match[2] (HTML-style)
-            const sectionLabel = (match[1] || match[2]).trim();
+            let sectionLabel = (match[1] || match[2]).trim();
+            
+            // Get the id from styling (#some-id {) or HTML section (<section id="some-id">)
+            const idMatch = text.slice(sectionRegex.lastIndex).match(/#([A-Za-z0-9_-]+)\s*\{|section\s+id="([A-Za-z0-9_-]+)"/);
+
+            if (idMatch) {
+                sectionLabel += ` "${idMatch[1] || idMatch[2]}"`;
+            }
     
             const subsections: CodeSection[] = [];
             let mediaMatch;

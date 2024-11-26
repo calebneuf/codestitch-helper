@@ -3,6 +3,9 @@ import * as vscode from 'vscode';
 // Initialize cache to store section ID to styling file path and position mappings
 const cssCache: Map<string, { path: string; position: vscode.Position }> = new Map();
 
+// Excluded directories
+const excludedDirectories: string[] = ['public', 'build', 'dist', 'node_modules', '.git', '.vscode', '.github', 'static', 'www'];
+
 // Command identifier
 export const navigateToSectionCSSCommandId = 'codestitchHelper.navigateToSectionCSS';
 
@@ -36,8 +39,10 @@ export async function navigateToSectionCSS(document: vscode.TextDocument, range:
       position = cacheEntry.position;
     } else {
       const patterns = ['**/*.scss', '**/*.less', '**/*.css'];
+      const excludePattern = excludedDirectories.map(dir => `**/${dir}/**`).join(',');
+
       outerLoop: for (const pattern of patterns) {
-        const files = await vscode.workspace.findFiles(pattern, '**/node_modules/**');
+        const files = await vscode.workspace.findFiles(pattern, excludePattern);
         for (const file of files) {
           const contentBytes = await vscode.workspace.fs.readFile(file);
           const content = contentBytes.toString();
