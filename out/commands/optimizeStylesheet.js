@@ -23,31 +23,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SectionNavigationProvider = void 0;
+exports.optimizeStylesheet = optimizeStylesheet;
 const vscode = __importStar(require("vscode"));
-const sectionUtils_1 = require("../utils/sectionUtils");
-class SectionNavigationProvider {
-    _onDidChangeTreeData = new vscode.EventEmitter();
-    onDidChangeTreeData = this._onDidChangeTreeData.event;
-    refresh() {
-        this._onDidChangeTreeData.fire();
-    }
-    getTreeItem(element) {
-        return element;
-    }
-    getChildren(element) {
-        if (!vscode.window.activeTextEditor) {
-            return Promise.resolve([]);
-        }
-        const document = vscode.window.activeTextEditor.document;
-        if (element) {
-            return Promise.resolve(element.children || []);
-        }
-        else {
-            const sections = (0, sectionUtils_1.getSectionsFromDocument)(document);
-            return Promise.resolve(sections);
-        }
-    }
+async function optimizeStylesheet(document, linkTag) {
+    const edit = new vscode.WorkspaceEdit();
+    // Create the optimized version of the link tag
+    const href = linkTag.match(/href=["']([^"']+)["']/)?.[1];
+    if (!href)
+        return;
+    const optimizedLink = `<link rel="stylesheet" href="${href}" media="print" onload="this.media='all'; this.onload=null;">
+    <noscript>
+        <link rel="stylesheet" href="${href}" />
+    </noscript>`;
+    // Get the range of the original link tag
+    const text = document.getText();
+    const index = text.indexOf(linkTag);
+    const startPos = document.positionAt(index);
+    const endPos = document.positionAt(index + linkTag.length);
+    // Replace the original with optimized version
+    edit.replace(document.uri, new vscode.Range(startPos, endPos), optimizedLink);
+    await vscode.workspace.applyEdit(edit);
 }
-exports.SectionNavigationProvider = SectionNavigationProvider;
-//# sourceMappingURL=sectionNavigationProvider.js.map
+//# sourceMappingURL=optimizeStylesheet.js.map

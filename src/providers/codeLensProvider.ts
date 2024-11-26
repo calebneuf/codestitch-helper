@@ -1,5 +1,5 @@
-import * as vscode from 'vscode';
-import { navigateToSectionCSSCommandId } from '../commands/navigateToSectionCSS';
+import * as vscode from "vscode";
+import { navigateToSectionCSSCommandId } from "../commands/navigateToSectionCSS";
 
 export class CodeLensProvider implements vscode.CodeLensProvider {
   onDidChangeCodeLenses?: vscode.Event<void> | undefined;
@@ -94,6 +94,49 @@ export class CodeLensProvider implements vscode.CodeLensProvider {
           title: "Go to Styling",
           command: navigateToSectionCSSCommandId,
           arguments: [document, range],
+        })
+      );
+    }
+
+    // Add this to your existing patterns in provideCodeLenses
+    const linkPattern =
+      /<link\s+rel=["']stylesheet["']\s+href=["'][^"']+["']\s*\/?>/g;
+    while ((match = linkPattern.exec(text)) !== null) {
+      // Check if this link is inside a noscript tag
+      const upToMatch = text.slice(0, match.index);
+      const lastNoscriptStart = upToMatch.lastIndexOf("<noscript");
+      const lastNoscriptEnd = upToMatch.lastIndexOf("</noscript");
+
+      // Skip if we're inside a noscript tag
+      if (lastNoscriptStart > lastNoscriptEnd) {
+        continue;
+      }
+
+      const startPosition = document.positionAt(match.index);
+      const endPosition = document.positionAt(match.index + match[0].length);
+      const range = new vscode.Range(startPosition, endPosition);
+
+      codeLenses.push(
+        new vscode.CodeLens(range, {
+          title: "Optimize Stylesheet",
+          command: "codestitchHelper.optimizeStylesheet",
+          arguments: [document, match[0]],
+        })
+      );
+    }
+
+    const sectionIdPattern = /section\s+id="[a-zA-Z-]*(\d+)"/g;
+    while ((match = sectionIdPattern.exec(text)) !== null) {
+      const startPosition = document.positionAt(match.index);
+      const endPosition = document.positionAt(match.index + match[0].length);
+      const range = new vscode.Range(startPosition, endPosition);
+      const numberId = match[1]; // This will capture only the numeric portion
+
+      codeLenses.push(
+        new vscode.CodeLens(range, {
+          title: "Open in CodeStitch",
+          command: "codestitchHelper.navigateToCodeStitch",
+          arguments: [numberId],
         })
       );
     }

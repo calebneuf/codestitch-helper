@@ -1,0 +1,1 @@
+{"version":3,"file":"navigateToCodeStitch.js","sourceRoot":"","sources":["../../src/commands/navigateToCodeStitch.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;;;;;AAEA,oDAGC;AALD,+CAAiC;AAE1B,KAAK,UAAU,oBAAoB,CAAC,SAAiB;IAC1D,MAAM,GAAG,GAAG,uDAAuD,SAAS,EAAE,CAAC;IAC/E,MAAM,MAAM,CAAC,GAAG,CAAC,YAAY,CAAC,MAAM,CAAC,GAAG,CAAC,KAAK,CAAC,GAAG,CAAC,CAAC,CAAC;AACvD,CAAC"}

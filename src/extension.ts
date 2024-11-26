@@ -1,8 +1,5 @@
 import * as vscode from "vscode";
-import {
-  SectionNavigationProvider,
-  CodeSection,
-} from "./providers/sectionNavigationProvider";
+import { SectionNavigationProvider } from "./providers/sectionNavigationProvider";
 import { replaceNavTabs } from "./commands/replaceNavTabs";
 import { selectAll } from "./commands/selectAll";
 import { openSection } from "./commands/openSection";
@@ -10,8 +7,15 @@ import { CodeLensProvider } from "./providers/codeLensProvider";
 import { addIconClass } from "./commands/addIconClass";
 import { convertToNetlifyForm } from "./commands/convertToNetlifyForm";
 import { optimizeSharpImages } from "./commands/optimizeSharpImages";
-import { navigateToSectionCSS, navigateToSectionCSSCommandId } from "./commands/navigateToSectionCSS";
-import { setupEleventySharpImages } from './commands/setupEleventySharpImages';
+import {
+  navigateToSectionCSS,
+  navigateToSectionCSSCommandId,
+} from "./commands/navigateToSectionCSS";
+import { setupEleventySharpImages } from "./commands/setupEleventySharpImages";
+import { optimizeStylesheet } from "./commands/optimizeStylesheet";
+import { navigateToCodeStitch } from "./commands/navigateToCodeStitch";
+import { reorderSections } from "./commands/reorderSections";
+import { CodeSection } from "./utils/sectionUtils";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
@@ -72,7 +76,28 @@ export function activate(context: vscode.ExtensionContext) {
   const setupEleventySharpImagesDisposable = vscode.commands.registerCommand(
     "codestitchHelper.setupEleventySharpImages",
     () => {
-        setupEleventySharpImages();
+      setupEleventySharpImages();
+    }
+  );
+
+  const optimizeStylesheetDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.optimizeStylesheet",
+    (document: vscode.TextDocument, linkTag: string) => {
+      optimizeStylesheet(document, linkTag);
+    }
+  );
+
+  const navigateToCodeStitchDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.navigateToCodeStitch",
+    (sectionId: string) => {
+      navigateToCodeStitch(sectionId);
+    }
+  );
+
+  const reorderSectionsDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.reorderSections",
+    () => {
+      reorderSections();
     }
   );
 
@@ -122,7 +147,10 @@ export function activate(context: vscode.ExtensionContext) {
     addIconClassDisposable,
     convertToNetlifyFormDisposable,
     navigateToSectionCSSDisposable,
-    setupEleventySharpImagesDisposable
+    setupEleventySharpImagesDisposable,
+    optimizeStylesheetDisposable,
+    navigateToCodeStitchDisposable,
+    reorderSectionsDisposable
   );
 }
 

@@ -55,7 +55,7 @@ Alternatively, you can install directly from the [VS Code Marketplace](https://m
 - [X] Show stitch ID in styling and HTML navigator
 - [ ] Reorder style file to match HTML file
 - [ ] Button to open browser to CodeStitch stitch
-- [ ] Button to optimize linking stylesheet
+- [X] Button to optimize linking stylesheet
 - [ ] Purge styles when HTML is modified, e.g. removing a button
 - [ ] Astro support
 - [X] Add a button to quickly jump to css file / line of a stitch

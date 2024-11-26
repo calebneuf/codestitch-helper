@@ -53,6 +53,11 @@
       {
         "command": "codestitchHelper.convertToNetlifyForm",
         "title": "Convert Form to Netlify Form with reCAPTCHA"
+      },
+      {
+        "command": "codestitchHelper.reorderSections",
+        "title": "Reorder Sections",
+        "category": "CodeStitch"
       }
     ],
     "menus": {

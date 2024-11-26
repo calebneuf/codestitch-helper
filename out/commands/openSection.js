@@ -28,6 +28,8 @@ const vscode = __importStar(require("vscode"));
 function openSection(section) {
     const document = section.document;
     const position = new vscode.Position(section.line, 0);
-    vscode.window.showTextDocument(document, { selection: new vscode.Range(position, position) });
+    vscode.window.showTextDocument(document, {
+        selection: new vscode.Range(position, position),
+    });
 }
 //# sourceMappingURL=openSection.js.map

@@ -23,31 +23,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SectionNavigationProvider = void 0;
+exports.navigateToCodeStitch = navigateToCodeStitch;
 const vscode = __importStar(require("vscode"));
-const sectionUtils_1 = require("../utils/sectionUtils");
-class SectionNavigationProvider {
-    _onDidChangeTreeData = new vscode.EventEmitter();
-    onDidChangeTreeData = this._onDidChangeTreeData.event;
-    refresh() {
-        this._onDidChangeTreeData.fire();
-    }
-    getTreeItem(element) {
-        return element;
-    }
-    getChildren(element) {
-        if (!vscode.window.activeTextEditor) {
-            return Promise.resolve([]);
-        }
-        const document = vscode.window.activeTextEditor.document;
-        if (element) {
-            return Promise.resolve(element.children || []);
-        }
-        else {
-            const sections = (0, sectionUtils_1.getSectionsFromDocument)(document);
-            return Promise.resolve(sections);
-        }
-    }
+async function navigateToCodeStitch(sectionId) {
+    const url = `https://codestitch.app/app/dashboard/catalog?search=${sectionId}`;
+    await vscode.env.openExternal(vscode.Uri.parse(url));
 }
-exports.SectionNavigationProvider = SectionNavigationProvider;
-//# sourceMappingURL=sectionNavigationProvider.js.map
+//# sourceMappingURL=navigateToCodeStitch.js.map

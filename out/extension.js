@@ -36,6 +36,9 @@ const convertToNetlifyForm_1 = require("./commands/convertToNetlifyForm");
 const optimizeSharpImages_1 = require("./commands/optimizeSharpImages");
 const navigateToSectionCSS_1 = require("./commands/navigateToSectionCSS");
 const setupEleventySharpImages_1 = require("./commands/setupEleventySharpImages");
+const optimizeStylesheet_1 = require("./commands/optimizeStylesheet");
+const navigateToCodeStitch_1 = require("./commands/navigateToCodeStitch");
+const reorderSections_1 = require("./commands/reorderSections");
 function activate(context) {
     console.log("codestitch-helper is now active!");
     const sectionNavProvider = new sectionNavigationProvider_1.SectionNavigationProvider();
@@ -61,6 +64,15 @@ function activate(context) {
     const navigateToSectionCSSDisposable = vscode.commands.registerCommand(navigateToSectionCSS_1.navigateToSectionCSSCommandId, navigateToSectionCSS_1.navigateToSectionCSS);
     const setupEleventySharpImagesDisposable = vscode.commands.registerCommand("codestitchHelper.setupEleventySharpImages", () => {
         (0, setupEleventySharpImages_1.setupEleventySharpImages)();
+    });
+    const optimizeStylesheetDisposable = vscode.commands.registerCommand("codestitchHelper.optimizeStylesheet", (document, linkTag) => {
+        (0, optimizeStylesheet_1.optimizeStylesheet)(document, linkTag);
+    });
+    const navigateToCodeStitchDisposable = vscode.commands.registerCommand("codestitchHelper.navigateToCodeStitch", (sectionId) => {
+        (0, navigateToCodeStitch_1.navigateToCodeStitch)(sectionId);
+    });
+    const reorderSectionsDisposable = vscode.commands.registerCommand("codestitchHelper.reorderSections", () => {
+        (0, reorderSections_1.reorderSections)();
     });
     // Ensure the Explorer view is open
     vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
@@ -90,7 +102,7 @@ function activate(context) {
             sectionNavProvider.refresh();
         }
     });
-    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable, navigateToSectionCSSDisposable, setupEleventySharpImagesDisposable);
+    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable, navigateToSectionCSSDisposable, setupEleventySharpImagesDisposable, optimizeStylesheetDisposable, navigateToCodeStitchDisposable, reorderSectionsDisposable);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map
