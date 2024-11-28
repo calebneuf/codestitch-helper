@@ -1,5 +1,8 @@
 # Change Log
 
+## 1.2.1
+* Show a warning if users optimizes an image without having the sharp integration set up
+
 ## 1.2.0
 
 * Added button to optimize stylesheet link

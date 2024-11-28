@@ -22,9 +22,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.optimizeSharpImages = optimizeSharpImages;
+const path_1 = __importDefault(require("path"));
 const vscode = __importStar(require("vscode"));
+const fs_1 = require("fs");
+let isSharpImagesPluginInstalled = null;
 async function optimizeSharpImages(document, range) {
     const editor = vscode.window.activeTextEditor;
     if (!editor)
@@ -39,8 +45,8 @@ async function optimizeSharpImages(document, range) {
         const attr = match[1];
         const path = match[2];
         // Determine the tag enclosing this src or srcset
-        const tagStartIndex = text.lastIndexOf('<', match.index);
-        const tagEndIndex = text.indexOf('>', match.index) + 1;
+        const tagStartIndex = text.lastIndexOf("<", match.index);
+        const tagEndIndex = text.indexOf(">", match.index) + 1;
         const tagText = text.substring(tagStartIndex, tagEndIndex);
         let width = null;
         let height = null;
@@ -98,8 +104,58 @@ async function optimizeSharpImages(document, range) {
         // Replace only this specific instance in the converted text
         converted = converted.replace(fullMatch, replacement);
     }
-    await editor.edit(editBuilder => {
+    if (isSharpImagesPluginInstalled === null) {
+        isSharpImagesPluginInstalled = await checkIfSharpImagesPluginInstalled();
+        if (!isSharpImagesPluginInstalled) {
+            vscode.window
+                .showWarningMessage("Sharp Images plugin is not installed.", "Install Now")
+                .then((selection) => {
+                if (selection === "Install Now") {
+                    vscode.commands.executeCommand("codestitchHelper.setupEleventySharpImages");
+                }
+            });
+        }
+    }
+    await editor.edit((editBuilder) => {
         editBuilder.replace(range, converted);
     });
+}
+async function checkIfSharpImagesPluginInstalled() {
+    const workspaceFolders = vscode.workspace.workspaceFolders;
+    if (!workspaceFolders) {
+        return false;
+    }
+    const workspacePath = workspaceFolders[0].uri.fsPath;
+    // Check package.json for the plugin dependency
+    const packageJsonPath = path_1.default.join(workspacePath, "package.json");
+    try {
+        const packageJsonData = await fs_1.promises.readFile(packageJsonPath, "utf8");
+        const packageJson = JSON.parse(packageJsonData);
+        const dependencies = packageJson.dependencies || {};
+        const devDependencies = packageJson.devDependencies || {};
+        const hasPluginDependency = "@codestitchofficial/eleventy-plugin-sharp-images" in dependencies ||
+            "@codestitchofficial/eleventy-plugin-sharp-images" in devDependencies;
+        if (!hasPluginDependency) {
+            return false;
+        }
+    }
+    catch {
+        // package.json not found or not readable
+        return false;
+    }
+    // Check .eleventy.js for plugin configuration
+    const eleventyConfigPath = path_1.default.join(workspacePath, ".eleventy.js");
+    try {
+        const eleventyConfigData = await fs_1.promises.readFile(eleventyConfigPath, "utf8");
+        if (!eleventyConfigData.includes("eleventyPluginSharpImages")) {
+            return false;
+        }
+    }
+    catch {
+        // .eleventy.js not found or not readable
+        return false;
+    }
+    // Plugin is installed and configured
+    return true;
 }
 //# sourceMappingURL=optimizeSharpImages.js.map
