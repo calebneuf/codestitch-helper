@@ -1,13 +1,25 @@
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
 // Initialize cache to store section ID to styling file path and position mappings
-const cssCache: Map<string, { path: string; position: vscode.Position }> = new Map();
+const cssCache: Map<string, { path: string; position: vscode.Position }> =
+  new Map();
 
 // Excluded directories
-const excludedDirectories: string[] = ['public', 'build', 'dist', 'node_modules', '.git', '.vscode', '.github', 'static', 'www'];
+const excludedDirectories: string[] = [
+  "public",
+  "build",
+  "dist",
+  "node_modules",
+  ".git",
+  ".vscode",
+  ".github",
+  "static",
+  "www",
+];
 
 // Command identifier
-export const navigateToSectionCSSCommandId = 'codestitchHelper.navigateToSectionCSS';
+export const navigateToSectionCSSCommandId =
+  "codestitchHelper.navigateToSectionCSS";
 
 /**
  * Activates the extension and registers commands.
@@ -15,7 +27,10 @@ export const navigateToSectionCSSCommandId = 'codestitchHelper.navigateToSection
  */
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
-    vscode.commands.registerCommand(navigateToSectionCSSCommandId, navigateToSectionCSS)
+    vscode.commands.registerCommand(
+      navigateToSectionCSSCommandId,
+      navigateToSectionCSS
+    )
   );
 }
 
@@ -24,7 +39,10 @@ export function activate(context: vscode.ExtensionContext) {
  * @param document The current text document
  * @param range The range of the section tag
  */
-export async function navigateToSectionCSS(document: vscode.TextDocument, range: vscode.Range) {
+export async function navigateToSectionCSS(
+  document: vscode.TextDocument,
+  range: vscode.Range
+) {
   const text = document.getText(range);
   const idMatch = text.match(/id="([^"]+)"/);
 
@@ -38,8 +56,9 @@ export async function navigateToSectionCSS(document: vscode.TextDocument, range:
       stylingPath = cacheEntry.path;
       position = cacheEntry.position;
     } else {
-      const patterns = ['**/*.scss', '**/*.less', '**/*.css'];
-      const excludePattern = excludedDirectories.map(dir => `**/${dir}/**`).join(',');
+      const patterns = ["**/*.scss", "**/*.less", "**/*.css"];
+      const excludePatterns = excludedDirectories.map((dir) => `**/${dir}/**`);
+      const excludePattern = `{${excludePatterns.join(",")}}`;
 
       outerLoop: for (const pattern of patterns) {
         const files = await vscode.workspace.findFiles(pattern, excludePattern);
@@ -53,7 +72,10 @@ export async function navigateToSectionCSS(document: vscode.TextDocument, range:
             // Adjust the match pattern according to the CSS preprocessor syntax if needed
             if (line.includes(`#${sectionId}`)) {
               stylingPath = file.fsPath;
-              position = new vscode.Position(lineNumber, line.indexOf(`#${sectionId}`));
+              position = new vscode.Position(
+                lineNumber,
+                line.indexOf(`#${sectionId}`)
+              );
               cssCache.set(sectionId, { path: stylingPath, position });
               break outerLoop;
             }
@@ -68,11 +90,17 @@ export async function navigateToSectionCSS(document: vscode.TextDocument, range:
       await vscode.window.showTextDocument(doc, {
         selection: new vscode.Range(position, position),
       });
-      vscode.window.showInformationMessage(`Navigated to styling for section ID "${sectionId}".`);
+      vscode.window.showInformationMessage(
+        `Navigated to styling for section ID "${sectionId}".`
+      );
     } else {
-      vscode.window.showErrorMessage(`Styling for section ID "${sectionId}" not found.`);
+      vscode.window.showErrorMessage(
+        `Styling for section ID "${sectionId}" not found.`
+      );
     }
   } else {
-    vscode.window.showErrorMessage('No section ID found in the selected range.');
+    vscode.window.showErrorMessage(
+      "No section ID found in the selected range."
+    );
   }
 }

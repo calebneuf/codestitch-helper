@@ -1,6 +1,11 @@
 # Change Log
 
+## 1.2.2
+
+* Fix styling navigating to wrong directory
+
 ## 1.2.1
+
 * Show a warning if users optimizes an image without having the sharp integration set up
 
 ## 1.2.0

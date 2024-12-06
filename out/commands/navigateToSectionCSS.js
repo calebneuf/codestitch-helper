@@ -30,9 +30,19 @@ const vscode = __importStar(require("vscode"));
 // Initialize cache to store section ID to styling file path and position mappings
 const cssCache = new Map();
 // Excluded directories
-const excludedDirectories = ['public', 'build', 'dist', 'node_modules', '.git', '.vscode', '.github', 'static', 'www'];
+const excludedDirectories = [
+    "public",
+    "build",
+    "dist",
+    "node_modules",
+    ".git",
+    ".vscode",
+    ".github",
+    "static",
+    "www",
+];
 // Command identifier
-exports.navigateToSectionCSSCommandId = 'codestitchHelper.navigateToSectionCSS';
+exports.navigateToSectionCSSCommandId = "codestitchHelper.navigateToSectionCSS";
 /**
  * Activates the extension and registers commands.
  * @param context The extension context
@@ -58,8 +68,9 @@ async function navigateToSectionCSS(document, range) {
             position = cacheEntry.position;
         }
         else {
-            const patterns = ['**/*.scss', '**/*.less', '**/*.css'];
-            const excludePattern = excludedDirectories.map(dir => `**/${dir}/**`).join(',');
+            const patterns = ["**/*.scss", "**/*.less", "**/*.css"];
+            const excludePatterns = excludedDirectories.map((dir) => `**/${dir}/**`);
+            const excludePattern = `{${excludePatterns.join(",")}}`;
             outerLoop: for (const pattern of patterns) {
                 const files = await vscode.workspace.findFiles(pattern, excludePattern);
                 for (const file of files) {
@@ -92,7 +103,7 @@ async function navigateToSectionCSS(document, range) {
         }
     }
     else {
-        vscode.window.showErrorMessage('No section ID found in the selected range.');
+        vscode.window.showErrorMessage("No section ID found in the selected range.");
     }
 }
 //# sourceMappingURL=navigateToSectionCSS.js.map
