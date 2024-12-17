@@ -39,6 +39,7 @@ const setupEleventySharpImages_1 = require("./commands/setupEleventySharpImages"
 const optimizeStylesheet_1 = require("./commands/optimizeStylesheet");
 const navigateToCodeStitch_1 = require("./commands/navigateToCodeStitch");
 const reorderSections_1 = require("./commands/reorderSections");
+const downloadSvgAssets_1 = require("./commands/downloadSvgAssets");
 function activate(context) {
     console.log("codestitch-helper is now active!");
     const sectionNavProvider = new sectionNavigationProvider_1.SectionNavigationProvider();
@@ -74,6 +75,7 @@ function activate(context) {
     const reorderSectionsDisposable = vscode.commands.registerCommand("codestitchHelper.reorderSections", () => {
         (0, reorderSections_1.reorderSections)();
     });
+    const downloadSvgAssetsDisposable = vscode.commands.registerCommand("codestitchHelper.downloadSvgAssets", downloadSvgAssets_1.downloadSvgAssets);
     // Ensure the Explorer view is open
     vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
     // Register CodeLensProvider for both HTML and SCSS
@@ -102,7 +104,7 @@ function activate(context) {
             sectionNavProvider.refresh();
         }
     });
-    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable, navigateToSectionCSSDisposable, setupEleventySharpImagesDisposable, optimizeStylesheetDisposable, navigateToCodeStitchDisposable, reorderSectionsDisposable);
+    context.subscriptions.push(optimizeSharpImagesDisposable, openSectionDisposable, selectAllDisposable, replaceNavTabsDisposable, addIconClassDisposable, convertToNetlifyFormDisposable, navigateToSectionCSSDisposable, setupEleventySharpImagesDisposable, optimizeStylesheetDisposable, navigateToCodeStitchDisposable, reorderSectionsDisposable, downloadSvgAssetsDisposable);
 }
 function deactivate() { }
 //# sourceMappingURL=extension.js.map

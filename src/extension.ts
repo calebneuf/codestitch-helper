@@ -16,6 +16,7 @@ import { optimizeStylesheet } from "./commands/optimizeStylesheet";
 import { navigateToCodeStitch } from "./commands/navigateToCodeStitch";
 import { reorderSections } from "./commands/reorderSections";
 import { CodeSection } from "./utils/sectionUtils";
+import { downloadSvgAssets } from "./commands/downloadSvgAssets";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
@@ -101,6 +102,11 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const downloadSvgAssetsDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.downloadSvgAssets",
+    downloadSvgAssets
+  );
+
   // Ensure the Explorer view is open
   vscode.commands.executeCommand("workbench.view.explorer"); // No need to focus on a specific view
 
@@ -150,7 +156,8 @@ export function activate(context: vscode.ExtensionContext) {
     setupEleventySharpImagesDisposable,
     optimizeStylesheetDisposable,
     navigateToCodeStitchDisposable,
-    reorderSectionsDisposable
+    reorderSectionsDisposable,
+    downloadSvgAssetsDisposable
   );
 }
 

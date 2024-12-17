@@ -57,7 +57,12 @@
       {
         "command": "codestitchHelper.reorderSections",
         "title": "Reorder Sections",
-        "category": "CodeStitch"
+        "category": "CodeStitch Helper"
+      },
+      {
+        "command": "codestitchHelper.downloadSvgAssets",
+        "title": "Download SVG Assets",
+        "category": "CodeStitch Helper"
       }
     ],
     "menus": {

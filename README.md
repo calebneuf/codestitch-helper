@@ -55,10 +55,18 @@ Alternatively, you can install directly from the [VS Code Marketplace](https://m
 - [X] Reorder style file to match HTML file
 - [X] Button to open browser to CodeStitch stitch
 - [X] Button to optimize linking stylesheet
-- [X] Add a button to quickly jump to css file / line of a stitch
+- [X] Add a button to quickly jump to CSS file / line of a stitch
+- [ ] Download all SVG assets from CDN into local files
+- [ ] Find all unoptimized images
+- [ ] Optimization checklist
+- [ ] Convert all emails, phones, and address to use {{client}} syntax
+- [ ] Easy re-order of pages using 11ty navigation
+- [ ] Add honeypot field to form button
+- [ ] Color 11ty / nunjucks code differently
+- [ ] Remove dark mode command
 - [ ] Purge styles when HTML is modified, e.g. removing a button
+- [ ] Make li / item dynamic using 11ty
 - [ ] Astro support
-- [ ] Add project helper window to catch common mistakes or improvements with project
 
 ## License
 
