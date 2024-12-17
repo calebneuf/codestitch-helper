@@ -8,4 +8,4 @@ node_modules/
 *.vsix
 
 # Ignore /out directory
-/out/
+out/
