@@ -7,5 +7,5 @@ node_modules/
 # Ignore vscode extension file
 *.vsix
 
-# Ignore /out directory
-out/
+# Ignore everything in out/ directory
+out/*
