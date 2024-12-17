@@ -19,13 +19,29 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codestitchHelperContainer",
+          "title": "CodeStitch Helper",
+          "icon": "resources/ai.svg"
+        }
+      ]
+    },
     "views": {
       "explorer": [
         {
-          "id": "codestitchHelper",
+          "id": "sectionNavigator",
           "name": "CodeStitch Styles Navigator",
           "visibility": "visible",
           "contextualTitle": "CodeStitch Sections Navigator"
+        }
+      ],
+      "codestitchHelperContainer": [
+        {
+          "id": "codestitchHelper",
+          "name": "CodeStitch Helper",
+          "type": "webview"
         }
       ]
     },
@@ -62,6 +78,11 @@
       {
         "command": "codestitchHelper.downloadSvgAssets",
         "title": "Download SVG Assets",
+        "category": "CodeStitch Helper"
+      },
+      {
+        "command": "codestitchHelper.optimizeSite",
+        "title": "Optimize Site",
         "category": "CodeStitch Helper"
       }
     ],

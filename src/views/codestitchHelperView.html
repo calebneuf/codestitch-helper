@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>CodeStitch Helper</title>
+    </head>
+    <body>
+        <h1>CodeStitch Helper</h1>
+        <button id="optimizeSiteButton">Optimize Site</button>
+
+        <script>
+            const vscode = acquireVsCodeApi();
+
+            document
+                .getElementById('optimizeSiteButton')
+                .addEventListener('click', () => {
+                    vscode.postMessage({command: 'optimizeSite'});
+                });
+        </script>
+    </body>
+</html>
