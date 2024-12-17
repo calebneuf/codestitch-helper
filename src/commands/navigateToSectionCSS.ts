@@ -47,7 +47,8 @@ export async function navigateToSectionCSS(
     } else {
       const files = await findAllStyleFiles();
 
-      for (const file of files) {
+      outerloop: for (const file of files) {
+        console.log(`Searching in ${file.fsPath}`); // Log the file path for debugging
         const contentBytes = await vscode.workspace.fs.readFile(file);
         const content = contentBytes.toString();
         const lines = content.split(/\r?\n/);
@@ -62,6 +63,7 @@ export async function navigateToSectionCSS(
               line.indexOf(`#${sectionId}`)
             );
             cssCache.set(sectionId, { path: stylingPath, position });
+            break outerloop;
           }
         }
       }
