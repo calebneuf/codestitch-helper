@@ -17,13 +17,16 @@ import { navigateToCodeStitch } from "./commands/navigateToCodeStitch";
 import { reorderSections } from "./commands/reorderSections";
 import { CodeSection } from "./utils/sectionUtils";
 import { downloadSvgAssets } from "./commands/downloadSvgAssets";
+import * as path from "path";
+import * as fs from "fs";
+import { SidebarProvider } from "./providers/SidebarProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
 
   const sectionNavProvider = new SectionNavigationProvider();
   vscode.window.registerTreeDataProvider(
-    "codestitchHelper",
+    "sectionNavigator",
     sectionNavProvider
   );
 
@@ -159,6 +162,25 @@ export function activate(context: vscode.ExtensionContext) {
     reorderSectionsDisposable,
     downloadSvgAssetsDisposable
   );
+
+  // Register Sidebar Provider
+  const provider = new SidebarProvider(context.extensionUri);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      SidebarProvider.viewType,
+      provider
+    )
+  );
+
+  // Register optimize site command
+  const optimizeSiteDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.optimizeSite",
+    () => {
+      vscode.window.showInformationMessage("Optimizing site...");
+      // Add your site optimization logic here
+    }
+  );
+  context.subscriptions.push(optimizeSiteDisposable);
 }
 
 export function deactivate() {}
