@@ -1,21 +1,10 @@
 import * as vscode from "vscode";
+import { excludedDirectories } from "../constants";
+import { findAllStyleFiles } from "../helperFunctions";
 
 // Initialize cache to store section ID to styling file path and position mappings
 const cssCache: Map<string, { path: string; position: vscode.Position }> =
   new Map();
-
-// Excluded directories
-const excludedDirectories: string[] = [
-  "public",
-  "build",
-  "dist",
-  "node_modules",
-  ".git",
-  ".vscode",
-  ".github",
-  "static",
-  "www",
-];
 
 // Command identifier
 export const navigateToSectionCSSCommandId =
@@ -56,29 +45,23 @@ export async function navigateToSectionCSS(
       stylingPath = cacheEntry.path;
       position = cacheEntry.position;
     } else {
-      const patterns = ["**/*.scss", "**/*.less", "**/*.css"];
-      const excludePatterns = excludedDirectories.map((dir) => `**/${dir}/**`);
-      const excludePattern = `{${excludePatterns.join(",")}}`;
+      const files = await findAllStyleFiles();
 
-      outerLoop: for (const pattern of patterns) {
-        const files = await vscode.workspace.findFiles(pattern, excludePattern);
-        for (const file of files) {
-          const contentBytes = await vscode.workspace.fs.readFile(file);
-          const content = contentBytes.toString();
-          const lines = content.split(/\r?\n/);
+      for (const file of files) {
+        const contentBytes = await vscode.workspace.fs.readFile(file);
+        const content = contentBytes.toString();
+        const lines = content.split(/\r?\n/);
 
-          for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
-            const line = lines[lineNumber];
-            // Adjust the match pattern according to the CSS preprocessor syntax if needed
-            if (line.includes(`#${sectionId}`)) {
-              stylingPath = file.fsPath;
-              position = new vscode.Position(
-                lineNumber,
-                line.indexOf(`#${sectionId}`)
-              );
-              cssCache.set(sectionId, { path: stylingPath, position });
-              break outerLoop;
-            }
+        for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
+          const line = lines[lineNumber];
+          // Adjust the match pattern according to the CSS preprocessor syntax if needed
+          if (line.includes(`#${sectionId}`)) {
+            stylingPath = file.fsPath;
+            position = new vscode.Position(
+              lineNumber,
+              line.indexOf(`#${sectionId}`)
+            );
+            cssCache.set(sectionId, { path: stylingPath, position });
           }
         }
       }
