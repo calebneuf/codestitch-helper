@@ -84,6 +84,22 @@
         "command": "codestitchHelper.optimizeSite",
         "title": "Optimize Site",
         "category": "CodeStitch Helper"
+      },
+      {
+        "command": "codestitchHelper.startOptimizeWizard",
+        "title": "Start Optimize Wizard"
+      },
+      {
+        "command": "codestitchHelper.optimizeWizardStep1",
+        "title": "Optimize Wizard - Step 1"
+      },
+      {
+        "command": "codestitchHelper.optimizeWizardStep2",
+        "title": "Optimize Wizard - Step 2"
+      },
+      {
+        "command": "codestitchHelper.optimizeWizardStep3",
+        "title": "Optimize Wizard - Step 3"
       }
     ],
     "menus": {

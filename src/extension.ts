@@ -20,6 +20,11 @@ import { downloadSvgAssets } from "./commands/downloadSvgAssets";
 import * as path from "path";
 import * as fs from "fs";
 import { SidebarProvider } from "./providers/SidebarProvider";
+import { OptimizeWizardProvider } from "./providers/OptimizeWizardProvider";
+import { optimizeWizardStep3 } from "./commands/optimizeWizard/optimizeWizardStep3";
+import { optimizeWizardStep1 } from "./commands/optimizeWizard/optimizeWizardStep1";
+import { optimizeWizardStep2 } from "./commands/optimizeWizard/optimizeWizardStep2";
+import { startOptimizeWizard } from "./commands/optimizeWizard/startOptimizeWizard";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("codestitch-helper is now active!");
@@ -164,23 +169,45 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Register Sidebar Provider
-  const provider = new SidebarProvider(context.extensionUri);
+  const sidebarProvider = new SidebarProvider(context.extensionUri);
   context.subscriptions.push(
     vscode.window.registerWebviewViewProvider(
       SidebarProvider.viewType,
-      provider
+      sidebarProvider
     )
   );
 
-  // Register optimize site command
-  const optimizeSiteDisposable = vscode.commands.registerCommand(
-    "codestitchHelper.optimizeSite",
-    () => {
-      vscode.window.showInformationMessage("Optimizing site...");
-      // Add your site optimization logic here
-    }
+  // Initialize Optimize Wizard Provider
+  const optimizeWizardProvider = new OptimizeWizardProvider(
+    context.extensionUri
   );
-  context.subscriptions.push(optimizeSiteDisposable);
+
+  // Register start optimize wizard command
+  const startOptimizeWizardDisposable = vscode.commands.registerCommand(
+    "codestitchHelper.startOptimizeWizard",
+    startOptimizeWizard(optimizeWizardProvider)
+  );
+  context.subscriptions.push(startOptimizeWizardDisposable);
+
+  // Register commands for each step
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "codestitchHelper.optimizeWizardStep1",
+      optimizeWizardStep1(optimizeWizardProvider)
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "codestitchHelper.optimizeWizardStep2",
+      optimizeWizardStep2(optimizeWizardProvider)
+    )
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "codestitchHelper.optimizeWizardStep3",
+      optimizeWizardStep3(optimizeWizardProvider)
+    )
+  );
 }
 
 export function deactivate() {}
