@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.3.0
+
+* Added "Download SVG Assets" command. Downloads all SVGS from CDN and adds them to local file directory.
+
 ## 1.2.2
 
 * Fix styling navigating to wrong directory

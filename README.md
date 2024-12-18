@@ -56,7 +56,7 @@ Alternatively, you can install directly from the [VS Code Marketplace](https://m
 - [X] Button to open browser to CodeStitch stitch
 - [X] Button to optimize linking stylesheet
 - [X] Add a button to quickly jump to CSS file / line of a stitch
-- [ ] Download all SVG assets from CDN into local files
+- [X] Download all SVG assets from CDN into local files
 - [ ] Find all unoptimized images
 - [ ] Optimization checklist
 - [ ] Convert all emails, phones, and address to use {{client}} syntax
